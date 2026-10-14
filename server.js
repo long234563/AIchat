@@ -220,7 +220,7 @@ const server = http.createServer(async(req,res)=>{
   if (req.method !== 'GET' && req.method !== 'HEAD') return json(res,405,{error:'Phương thức không hỗ trợ.'});
   return serveFile(req.url,res);
 });
-server.listen(port,'127.0.0.1',()=>{
+server.listen(port,'0.0.0.0',()=>{
   console.log(`\n✦ long AI: http://localhost:${port}`);
   console.log(`Chat model: ${model}; Search model: ${searchModel}`);
   if (!configured) console.log('⚠ Chưa cấu hình GEMINI_API_KEY — hãy tạo file .env rồi khởi động lại.');
