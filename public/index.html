@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="long AI — Trợ lý AI hỗ trợ hỏi đáp, học tập và tìm kiếm web." />
+  <title>long AI — Trợ lý AI của bạn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-symbol" aria-hidden="true">L</div>
+        <div class="brand-copy"><strong>long <span>AI</span></strong></div>
+        <button class="icon-btn sidebar-hide" id="closeSidebar" aria-label="Đóng menu">✕</button>
+      </div>
+
+      <button id="newChat" class="new-chat-btn"><span>＋</span> Cuộc trò chuyện mới <kbd>Alt N</kbd></button>
+      <div class="sidebar-label">GẦN ĐÂY</div>
+      <nav id="chatList" class="chat-list" aria-label="Lịch sử hội thoại"></nav>
+
+      <div class="sidebar-bottom">
+        <button class="side-setting" id="themeBtn" type="button"><span id="themeIcon">☼</span> <span id="themeLabel">Giao diện sáng</span><span class="setting-arrow">↗</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="top-left">
+          <button class="icon-btn menu-btn" id="menuBtn" aria-label="Mở menu">☰</button>
+          <div class="top-divider"></div>
+          <span class="current-title" id="currentTitle">Cuộc trò chuyện mới</span>
+          <span class="title-chevron">⌄</span>
+        </div>
+        <div class="top-right">
+          <span class="connection" id="connection"><i></i><span id="connectionText">Đang kiểm tra API</span></span>
+          <span class="avatar" title="long AI">L</span>
+        </div>
+      </header>
+
+      <section class="conversation" id="conversation" aria-label="Nội dung chat">
+        <div id="welcome" class="welcome">
+          <div class="hero-mark"><span>✦</span><div class="hero-orbit"></div></div>
+          <div class="eyebrow">long AI • TRỢ LÝ CỦA BẠN</div>
+          <h1>Xin chào, <span>bạn.</span><br/>Hôm nay chúng ta làm gì?</h1>
+          <p class="hero-sub">Từ một câu hỏi nhỏ đến những ý tưởng lớn —<br class="desktop-only"/> mình luôn sẵn sàng hỗ trợ bạn khám phá.</p>
+          <div class="prompts" id="prompts">
+            <button class="prompt" data-prompt="Giải thích nguyên lý điều khiển FOC cho động cơ BLDC một cách dễ hiểu, có ví dụ."><span class="prompt-icon purple">◇</span><span><strong>Học kiến thức mới</strong><small>Giải thích nguyên lý điều khiển FOC</small></span><b>↗</b></button>
+            <button class="prompt" data-prompt="Tìm trên web các tin tức công nghệ AI đáng chú ý trong tuần này và dẫn nguồn."><span class="prompt-icon blue">⌕</span><span><strong>Cập nhật tin mới</strong><small>Khám phá những gì đang diễn ra</small></span><b>↗</b></button>
+            <button class="prompt" data-prompt="Giúp tôi lên kế hoạch học lập trình web HTML, CSS, JavaScript trong 30 ngày."><span class="prompt-icon orange">▧</span><span><strong>Lên kế hoạch</strong><small>Biến mục tiêu thành hành động</small></span><b>↗</b></button>
+            <button class="prompt" data-prompt="Hãy đưa ra 5 ý tưởng dự án IoT phù hợp cho sinh viên ngành điện tử, kèm linh kiện cần dùng."><span class="prompt-icon green">✳</span><span><strong>Khơi nguồn ý tưởng</strong><small>Thử một dự án thú vị</small></span><b>↗</b></button>
+          </div>
+        </div>
+        <div id="messages" class="messages" aria-live="polite"></div>
+      </section>
+
+      <div class="composer-outer">
+        <div class="composer-wrap">
+          <form id="chatForm" class="composer">
+            <label for="messageInput" class="sr-only">Nhập câu hỏi</label>
+            <textarea id="messageInput" rows="1" placeholder="Hỏi long AI bất cứ điều gì..." autocomplete="off" maxlength="6000"></textarea>
+            <div class="composer-actions">
+              <label class="web-toggle" id="webToggleLabel" title="Tìm thông tin trên web (tùy thuộc quyền truy cập API)">
+                <input type="checkbox" id="webToggle" />
+                <span class="web-globe">◎</span><span>Tìm web</span><span class="toggle-indicator"></span>
+              </label>
+              <span class="compose-spacer"></span>
+              <span id="charCount" class="char-count"></span>
+              <button class="send-btn" id="sendBtn" type="submit" aria-label="Gửi tin nhắn"><span id="sendIcon">↑</span></button>
+            </div>
+          </form>
+          <p class="disclaimer">long AI có thể mắc lỗi. Hãy kiểm tra thông tin quan trọng. <span>Enter để gửi · Shift + Enter để xuống dòng</span></p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
